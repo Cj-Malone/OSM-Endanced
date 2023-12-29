@@ -8,6 +8,7 @@
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import OSM_Enhanced.pipelines.fhrs
 import OSM_Enhanced.pipelines.website
+import OSM_Enhanced.pipelines.wikidata
 
 BOT_NAME = "OSM_Enhanced"
 
@@ -67,6 +68,7 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
     OSM_Enhanced.pipelines.fhrs.FhrsPipeline: 300,
     OSM_Enhanced.pipelines.website.WebsitePipeline: 300,
+    OSM_Enhanced.pipelines.wikidata.WikidataPipeline: 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
