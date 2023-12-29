@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import OSM_Enhanced.pipelines.fhrs
 
 BOT_NAME = "OSM_Enhanced"
 
@@ -62,9 +63,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    "OSM_Enhanced.pipelines.OsmEnhancedPipeline": 300,
-# }
+ITEM_PIPELINES = {
+    OSM_Enhanced.pipelines.fhrs.FhrsPipeline: 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
