@@ -7,13 +7,13 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 import OSM_Enhanced.pipelines.fhrs
-import OSM_Enhanced.pipelines.website
 import OSM_Enhanced.pipelines.wikidata
 
 BOT_NAME = "OSM_Enhanced"
 
 SPIDER_MODULES = ["OSM_Enhanced.spiders"]
 NEWSPIDER_MODULE = "OSM_Enhanced.spiders"
+COMMANDS_MODULE = "OSM_Enhanced.commands"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -67,7 +67,6 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     OSM_Enhanced.pipelines.fhrs.FhrsPipeline: 300,
-    OSM_Enhanced.pipelines.website.WebsitePipeline: 300,
     OSM_Enhanced.pipelines.wikidata.WikidataPipeline: 300,
 }
 
