@@ -137,6 +137,6 @@ class PoiItem:
             self.set_tag("check_date", check_date)
 
     def get_uri(self) -> str:
-        return "https://www.openstreetmap.org/{}/{}#{}".format(
+        return "https://www.openstreetmap.org/{}/{}/history/{}".format(
             self.type, self.id, self.version
         )
