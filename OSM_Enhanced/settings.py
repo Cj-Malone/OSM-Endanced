@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import OSM_Enhanced.exporters.maproulette_geojson
 
 BOT_NAME = "OSM_Enhanced"
 
@@ -93,3 +94,7 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+FEED_EXPORTERS = {
+    "mrgeojson": OSM_Enhanced.exporters.maproulette_geojson.MapRouletteGeoJsonExporter,
+}

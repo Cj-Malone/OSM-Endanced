@@ -20,6 +20,12 @@ class Operation:
         self.tags = tags
         self.keys = keys
 
+    def get_dict(self) -> dict:
+        if self.operation == OperationType.SET_TAGS:
+            return {"operation": self.operation, "data": self.tags}
+        elif self.operation == OperationType.UN_SET_TAGS:
+            return {"operation": self.operation, "data": self.keys}
+
     def __repr__(self) -> str:
         return "Operation({}, {}, {})".format(self.operation, self.tags, self.keys)
 
