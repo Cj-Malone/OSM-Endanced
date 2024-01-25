@@ -26,9 +26,9 @@ class OsmSpider(Spider):
                 poi["tags"],
             )
 
-            if item.website and not "brand:wikidata" in item.other_tags:
+            if (website := item.get_website()) and "brand:wikidata" not in item.tags:
                 yield Request(
-                    item.website,
+                    website,
                     self.parse_website,
                     meta={"item": item},
                     errback=self.website_fail,
@@ -39,29 +39,31 @@ class OsmSpider(Spider):
     def parse_website(self, response: Response, **kwargs: Any) -> Any:
         item = response.meta["item"]
 
-        item.website = response.url
+        item.set_website(response.url)
 
-        if not item.phone:
+        if not item.get_phone():
             if phone := response.xpath(
                 '//a[contains(@href, "tel:")][@href]/@href'
             ).get():
-                item.phone = phone.removeprefix("tel:")
+                item.set_phone(phone.removeprefix("tel:"))
 
-        if not item.email:
+        if not item.get_email():
             if email := response.xpath(
                 '//a[contains(@href, "mailto:")][@href]/@href'
             ).get():
-                item.email = email.removeprefix("mailto:")
+                item.set_email(email.removeprefix("mailto:"))
 
-        if not item.instagram:
-            item.instagram = response.xpath(
+        if not item.get_instagram():
+            if ig := response.xpath(
                 '//a[contains(@href, "instagram.com/")][@href]/@href'
-            ).get()
+            ).get():
+                item.set_instagram(ig)
 
-        if not item.facebook:
-            item.facebook = response.xpath(
+        if item.get_facebook():
+            if fb := response.xpath(
                 '//a[contains(@href, "facebook.com/")][@href]/@href'
-            ).get()
+            ).get():
+                item.set_facebook(fb)
 
         item.sources.append(response.url)
 
@@ -69,5 +71,5 @@ class OsmSpider(Spider):
 
     def website_fail(self, failure: Failure):
         item = failure.request.meta["item"]
-        item.website = None
+        item.set_website(None)
         yield item
