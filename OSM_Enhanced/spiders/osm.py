@@ -17,12 +17,25 @@ class OsmSpider(Spider):
 
     def parse(self, response: Response, **kwargs: Any) -> Any:
         for poi in response.json()["elements"]:
+            geom = poi.get("geometry")
+            if not geom:
+                if center := poi.get("center"):  # way/relation
+                    geom = {
+                        "type": "Point",
+                        "coordinates": [center.get("lon", 0), center.get("lat", 0)],
+                    }
+                else:  # node
+                    geom = {
+                        "type": "Point",
+                        "coordinates": [poi.get("lon", 0), poi.get("lat", 0)],
+                    }
+
             item = PoiItem(
                 poi["type"],
                 poi["id"],
                 poi.get("timestamp"),
                 poi.get("version"),
-                poi.get("geometry"),
+                geom,
                 poi["tags"],
             )
 
