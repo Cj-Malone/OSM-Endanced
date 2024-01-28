@@ -42,3 +42,9 @@ def test_del_operations():
     item.del_tags(["name", "website", "contact:phone"])
     assert len(item.operations) == 3
     assert len(item.tags) == 0
+
+
+def test_bad_website():
+    item = PoiItem(tags={"website": "https://example.org/"})
+    item.set_website(None)
+    assert len(item.tags) == 0
