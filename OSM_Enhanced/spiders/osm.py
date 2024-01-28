@@ -26,7 +26,11 @@ class OsmSpider(Spider):
                 poi["tags"],
             )
 
-            if (website := item.get_website()) and "brand:wikidata" not in item.tags:
+            if (
+                (website := item.get_website())
+                and not item.is_atp_domain()
+                and not item.is_full()
+            ):
                 yield Request(
                     website,
                     self.parse_website,

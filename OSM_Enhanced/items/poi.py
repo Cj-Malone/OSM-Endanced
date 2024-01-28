@@ -154,3 +154,20 @@ class PoiItem:
         return "https://www.openstreetmap.org/{}/{}/history/{}".format(
             self.type, self.id, self.version
         )
+
+    def is_atp_domain(self) -> bool:
+        # These POIs are better handled by All The Places
+        if "brand:wikidata" in self.tags:
+            return True
+        if "operator:wikidata" in self.tags:
+            return True
+
+        if website := self.get_website():
+            if "ymca-fg.org/" in website:
+                return True
+
+        return False
+
+    def is_full(self) -> bool:
+        # "full" meaning we have all the important details, not worth fetching extra
+        return all([self.get_website(), self.get_phone(), self.get_facebook()])
