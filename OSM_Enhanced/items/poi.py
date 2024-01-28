@@ -131,9 +131,17 @@ class PoiItem:
         return self.tags.get("contact:facebook") or self.tags.get("facebook")
 
     def set_facebook(self, facebook: str):
-        if facebook != self.get_instagram():
+        if facebook != self.get_facebook():
             self.set_tag("contact:facebook", facebook)
             self.del_tags(["facebook"])
+
+    def get_twitter(self) -> str | None:
+        return self.tags.get("contact:twitter") or self.tags.get("twitter")
+
+    def set_twitter(self, twitter: str):
+        if twitter != self.get_twitter():
+            self.set_tag("contact:twitter", twitter)
+            self.del_tags(["twitter"])
 
     def get_check_date(self) -> str | None:
         return self.tags.get("check_date") or self.tags.get("survey:date")

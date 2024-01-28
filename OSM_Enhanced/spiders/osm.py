@@ -59,11 +59,17 @@ class OsmSpider(Spider):
             ).get():
                 item.set_instagram(ig)
 
-        if item.get_facebook():
+        if not item.get_facebook():
             if fb := response.xpath(
                 '//a[contains(@href, "facebook.com/")][@href]/@href'
             ).get():
                 item.set_facebook(fb)
+
+        if not item.get_twitter():
+            if twitter := response.xpath(
+                '//a[contains(@href, "twitter.com/")][@href]/@href'
+            ).get():
+                item.set_twitter(twitter)
 
         item.sources.append(response.url)
 
