@@ -49,6 +49,7 @@ class OsmSpider(Spider):
                     self.parse_website,
                     meta={"item": item},
                     errback=self.website_fail,
+                    headers={"Upgrade-Insecure-Requests": 1},
                 )
             else:
                 yield item
